@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>starry(无规则运动)</title>
+    <style>
+    html,body{margin: 0;padding: 0; }
+    </style>
+  </head>
+  <body>
+  <canvas id="canvas" style="position:absolute;width:100%; height:100%; background:#2f62f7"></canvas>
+  
+
+</body></html>
+<script>
+
+  var cx = document.getElementById('canvas');
+  var ctx = cx.getContext('2d');
+  var len = 150;
+  var mousePos = [0, 0];
+  var easingFactor = 10;
+  var backgroundColor = 'rgba(0,0,0,0)';
+  var dotColor = '#fff';
+  var lineColor = '#fff';
+  var dots = [];//点
+  var lines = [];//线
+  
+  //构建
+  function construct(){
+    for( var i = 0; i < len; i++ ){
+        var dot = {
+          isMouse : i===0,
+          x : Math.random()*cx.width,
+          y : Math.random()*cx.height,
+          r : i===0?0:Math.random()*3,
+          vx : Math.random()-.5,
+          vy : Math.random()-.5,
+          c : Math.random()*10,
+          cv : Math.random()+1,
+        }
+        dots.push(dot);
+    }
+    
+    dots.forEach(function(dot,m){  
+        dots.forEach(function(_dot,n){
+            if( n < m ){
+                var line = {
+                    from : dot,
+                    to : _dot
+                }
+                lines.push(line);
+            } 
+        })
+    })   
+  }
+  //运动
+  function step(){
+    dots.forEach(function(dot){
+        if(dot.isMouse){
+          dot.x += (mousePos[0] - dot.x);
+          dot.y += (mousePos[1] - dot.y) / easingFactor;
+        };
+        
+        if(dot.x<0){
+          dot.x = 0;
+          dot.vx *=-1;
+        }
+        if(dot.x>cx.width){
+          dot.x = cx.width;
+          dot.vx *=-1;
+        }
+        if(dot.y<0){
+          dot.y = 0;
+          dot.vy *=-1;
+        }
+        if(dot.y>cx.height){
+          dot.y = cx.height;
+          dot.vy *=-1;
+        }
+        //随机运动   
+        dot.c += dot.cv;
+        if(dot.c > 250+Math.random()*10 ){
+            dot.cv = 1+Math.random(); 
+            dot.c = Math.random()*10;
+            dot.vx = Math.random()-.5;
+            dot.vy = Math.random()-.5;
+        }
+        
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+        
+    });
+    render();
+    window.requestAnimationFrame(step);
+  }
+  //绘制
+  function render(){
+    ctx.clearRect(0,0,cx.width,cx.height);//清除
+    //ctx.globalAlpha = 1;
+    ctx.fillStyle = backgroundColor;
+    ctx.fillRect(0,0,cx.width,cx.height);
+    ctx.fillStyle = dotColor;
+    dots.forEach(function(dot){
+      ctx.beginPath();
+      ctx.arc(dot.x,dot.y,dot.r,0,2*Math.PI);
+      ctx.fill();
+    });
+    ctx.save();
+    lines.forEach(function(line){
+      var l = Math.sqrt(Math.pow((line.from.x - line.to.x), 2) + Math.pow((line.from.y - line.to.y), 2));
+      var maxl = cx.width / 8;
+      if( l > maxl) return;
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = (1.0 - l / maxl) * 2;
+      ctx.globalAlpha = 1.0 - l / maxl;
+      ctx.beginPath();
+      ctx.moveTo(line.from.x,line.from.y);
+      ctx.lineTo(line.to.x,line.to.y);
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  window.onresize = function () {
+    cx.width = cx.clientWidth;
+    cx.height = cx.clientHeight;
+
+    if (dots.length == 0) {
+        construct();
+    }
+
+    render();
+  };
+
+  window.onmousemove = function (e) {
+    mousePos[0] = e.clientX - cx.offsetLeft;
+    mousePos[1] = e.clientY - cx.offsetTop;
+  }
+
+  window.onresize(); // trigger the event manually.
+  
+  window.requestAnimationFrame(step);
+
+</script>

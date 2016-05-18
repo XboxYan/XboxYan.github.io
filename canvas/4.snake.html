@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Canvas Snake</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      #stage {
+        width: 320px;
+        height: 480px;
+        position: relative;
+        border: 5px solid #666;
+        margin: 20px auto;
+      }
+      
+      canvas {
+        position: absolute;
+      }
+      
+      #game-layer {
+        z-index: 2;
+        top: 80px;
+      }
+      
+      #background-layer {
+        z-index: 1;
+        top: 80px;
+      }
+      
+      #score-layer {
+        z-index: 3;
+      }
+    </style>
+  
+  
+    <script type="text/javascript">
+    
+    function init(){
+       var cell = 20;//栅格
+       var len = 2;
+       var snake = {
+          bool : true,
+          fps : 5,//帧
+          len : len,
+          dir : 2,
+          pos : [0,0],
+          map : [],
+          cell : cell,
+          a:[0,0],
+          score :len
+       }
+       draw_bg(cell);
+       Snakemove(snake);
+       draw_score(snake);
+       rand_food(snake);
+    }
+    //背景
+    function draw_bg(cell){
+        var bg = document.getElementById('background-layer');
+        var bgx = bg.getContext('2d');
+        bgx.fillStyle = '#eee';
+        bgx.strokeStyle = '#ccc'
+        for(var i = 0,l = bg.width/cell; i < l; i++ ){
+            for(var j = 0,m = bg.height/cell; j < m; j++ ){
+                bgx.fillRect(i*cell,j*cell,cell,cell);
+                bgx.strokeRect(i*cell,j*cell,cell,cell);
+            }
+        }  
+    }
+    //蛇
+    function draw_snake(snake){
+        var game = document.getElementById('game-layer');
+        var gamex = game.getContext('2d');
+        switch(snake.dir){ 
+          case 1:snake.pos[1] = snake.pos[1]-snake.cell;break; 
+          case 2:snake.pos[0] = snake.pos[0]+snake.cell;break; 
+          case 0:snake.pos[0] = snake.pos[0]-snake.cell;break; 
+          case 3:snake.pos[1] = snake.pos[1]+snake.cell;break; 
+        }
+        var x = snake.pos[0];
+        var y = snake.pos[1];
+        if(x+snake.cell>game.width || y+snake.cell>game.height || x<0 || y<0){ 
+            snake.bool = false;
+            draw_score(snake); 
+            return;
+        }
+        for(var i=0;i<snake.map.length;i++){ 
+            if( snake.map[i].x==x && snake.map[i].y==y){ 
+                snake.bool = false;
+                draw_score(snake); 
+                return;
+            } 
+        } 
+        if (snake.map.length>snake.len-1) { 
+            var cl = snake.map.shift();
+            gamex.clearRect(cl['x'], cl['y'], snake.cell, snake.cell); 
+        }; 
+
+        snake.map.push({'x':snake.pos[0],'y':snake.pos[1]}); //将数据添加到原数组尾部 
+        gamex.fillStyle = "#fff"; 
+        gamex.fillRect(x, y, snake.cell, snake.cell);
+        gamex.fillStyle = "#333";     
+        gamex.fillRect(x+1, y+1, snake.cell-2, snake.cell-2);
+        gamex.fillStyle = "#666"; 
+        gamex.fillRect(x+4, y+4, snake.cell-8, snake.cell-8);
+        //吃食物
+        var level = Math.floor((snake.len-snake.score)/10);
+        if(snake.a[0] === x && snake.a[1] === y){ 
+            rand_food(snake);
+            snake.len++;
+            if(Math.floor((snake.len-snake.score)/10)>level){
+                //加速
+                snake.fps += 2;
+            }
+            draw_score(snake);  
+        }     
+    }
+    
+    //移动
+    function Snakemove(snake){
+        
+        if( !snake.bool ){ return }
+        
+        document.onkeydown = function(e) {
+            var code = e.keyCode - 37; 
+            switch(code){ 
+                case 1:snake.dir = snake.dir===3?3: 1;break; 
+                case 2:snake.dir = snake.dir===0?0: 2;break; 
+                case 3:snake.dir = snake.dir===1?1: 3;break; 
+                case 0:snake.dir = snake.dir===2?2: 0;break; 
+            } 
+        }
+        
+        setTimeout(function() {
+           draw_snake(snake);
+    　　　　requestAnimationFrame(function(){
+              Snakemove(snake)
+          });
+    　　}, 1000/snake.fps);
+    }
+    // 随机放置食物 
+    function rand_food(snake){
+        var game = document.getElementById('game-layer');
+        var gamex = game.getContext('2d');
+        snake.a[0] = Math.floor(Math.random()*(game.width/snake.cell))*snake.cell;
+        snake.a[1] = Math.floor(Math.random()*(game.height/snake.cell))*snake.cell; 
+        //随机出现的点不能出现在蛇的身上 
+        for(var i=0;i<snake.map.length;i++){ 
+            while(snake.map[i].x === snake.a[0] && snake.map[i].y === snake.a[1] ){ 
+                snake.a[0] = Math.floor(Math.random()*(game.width/snake.cell))*snake.cell;
+                snake.a[1] = Math.floor(Math.random()*(game.height/snake.cell))*snake.cell;      
+            }   
+        }
+        gamex.fillStyle = "#333"; 
+        gamex.fillRect(snake.a[0], snake.a[1], snake.cell, snake.cell);
+    } 
+    //计分&GAME OVER
+    function draw_score(snake){
+        var score = document.getElementById('score-layer');
+        var scorex = score.getContext('2d');
+        scorex.fillStyle = '#666';
+        scorex.fillRect(0,0,score.width,80);
+        scorex.font = "48px serif";
+        scorex.fillStyle = '#fff';
+        scorex.textBaseline = "middle";
+        scorex.fillText('Scroe : '+(snake.len-snake.score), 10, 40);
+        if(!snake.bool){
+            scorex.fillStyle = 'rgba(0,0,0,0.5)';
+            scorex.fillRect(20,180,280,200);
+            scorex.font = "36px serif";
+            scorex.fillStyle = '#fff';
+            var text = scorex.measureText("GAME OVER !");
+            scorex.fillText('GAME OVER !', (score.width-text.width)/2, 270);
+        }
+    }
+    
+    
+    </script>
+</head>
+<body onLoad="init()">
+  <div id="stage">
+    <canvas id="score-layer" width="320" height="480"></canvas>
+    <canvas id="game-layer" width="320" height="400"></canvas>
+    <canvas id="background-layer" width="320" height="400"></canvas>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas Clock</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript">
+  function init(){
+    window.requestAnimationFrame(clock);
+  }
+  function clock() {
+    var now = new Date();
+    var minsec = now.getMilliseconds();
+    var sec = now.getSeconds();
+    var min = now.getMinutes();
+    var hr  = now.getHours();
+    var num = ['XII','I','II','III','IV','V','VI','VII','VIII','IX','X','XI'];
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.save();
+    ctx.clearRect(0,0,600,600);
+    ctx.translate(300,300);
+    ctx.rotate(-Math.PI/2);
+    ctx.strokeStyle = "#333";
+    ctx.fillStyle = "white";
+    ctx.lineCap = "round";
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowBlur = 3;
+    ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+    ctx.font = "18px serif";
+    ctx.textBaseline = 'middle';
+    //底盘(300,300)
+    ctx.save();
+    ctx.lineWidth = 14;
+    ctx.strokeStyle = "#315dff";
+    ctx.beginPath();
+    ctx.arc(0,0,200,0,2*Math.PI,true);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    //刻度(300,300)
+    ctx.save();
+    for(var i=0;i<60;i++){
+        ctx.beginPath();
+        if (i%5!=0) {
+          ctx.lineWidth = 4;
+          ctx.moveTo(175,0);
+        }else{
+          ctx.lineWidth = 6;
+          ctx.moveTo(165,0);
+          ctx.save();
+          ctx.lineWidth = 2;
+          ctx.translate(145,0)
+          ctx.rotate(Math.PI/2-Math.PI/6*(i/5));
+          ctx.strokeText(num[i/5], -ctx.measureText(num[i/5]).width/2, 0); 
+          ctx.restore();
+        }
+        ctx.lineTo(180,0);
+        ctx.stroke();
+        ctx.rotate(Math.PI/30);
+   
+    }
+    ctx.restore();
+    //时针(300,300)
+    ctx.save();
+    ctx.rotate( hr*(Math.PI/6) + (Math.PI/360)*min);
+    ctx.lineWidth = 18;
+    ctx.strokeStyle = "#333";
+    ctx.beginPath();
+    ctx.moveTo(-10,0);
+    ctx.lineTo(80,0);
+    ctx.stroke();
+    ctx.restore();
+    //分针(300,300)
+    ctx.save();
+    ctx.rotate( (Math.PI/30)*min )
+    ctx.lineWidth = 14;
+    ctx.strokeStyle = "#333";
+    ctx.beginPath();
+    ctx.moveTo(-15,0);
+    ctx.lineTo(120,0);
+    ctx.stroke();
+    ctx.restore();
+    //秒针(300,300)
+    ctx.save();
+    ctx.rotate(sec * Math.PI/30 + minsec * Math.PI/30000);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#ff4747";
+    ctx.beginPath();
+    ctx.moveTo(-30,0);
+    ctx.lineTo(-10,0);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(0,0,10,0,2*Math.PI,true);
+    ctx.lineTo(160,0);
+    ctx.arc(160,0,3,0,2*Math.PI,true);
+    ctx.lineTo(170,0);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    //还原画布(0,0)
+    ctx.restore();
+    window.requestAnimationFrame(clock);
+  }
+	</script>
+</head>
+<body onLoad="init();">
+<canvas id="canvas" width="600" height="600" >
+    你用的垃圾浏览器！
+</canvas>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Canvas Ball</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script type="text/javascript">
+  function init(){
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      var ball = {
+        x: 50,
+        y: 50,
+        radgrad: '',
+        vx: 10,//x初速度
+        vy: -5,//y初速度
+        ay: 0.5,//重力速度
+        radius: 30,
+        bounceX: 0.95,//地面摩擦系数
+        bounce : -0.85, //定义反弹系数
+        draw: function() {
+          ctx.fillStyle = 'rgba(255,255,255,0.4)';
+          ctx.fillRect(0,0,canvas.width,canvas.height);
+          radgrad = ctx.createRadialGradient(this.x-4,this.y-6,10,this.x,this.y,this.radius);
+          radgrad.addColorStop(0, '#fff');
+          radgrad.addColorStop(0.3, '#eee');
+          radgrad.addColorStop(1, '#ccc');
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
+          ctx.fillStyle = radgrad;
+          ctx.fill();
+        }
+      };
+      draw();
+
+      function draw() {
+        //绘制
+        ball.draw();
+
+        //垂直碰撞
+        if (ball.y + ball.radius > canvas.height) {
+          ball.y = canvas.height - ball.radius;
+          ball.vy *= ball.bounce;
+        }else{
+          ball.vy += ball.ay;
+          ball.y += ball.vy;
+        }
+        
+        //水平碰撞
+        if (ball.x + ball.radius > canvas.width ){
+            ball.x = canvas.width - ball.radius;
+            ball.vx *= ball.bounce;
+        }else if(ball.x  < ball.radius){
+            ball.x = ball.radius;
+            ball.vx *= ball.bounce;
+        }else{
+            //地面摩擦
+            if(ball.y == canvas.height - ball.radius)
+            {
+              ball.vx *= ball.bounceX;
+            }
+            ball.x += ball.vx;
+        }
+
+        window.requestAnimationFrame(draw);
+      }
+  }
+  </script>
+</head>
+
+<body onLoad="init();">
+  <canvas id="canvas" width="1000" height="500" style="border:1px solid #000">
+    你用的垃圾浏览器！
+</canvas>
+</body>
+
+</html>
