@@ -32,7 +32,7 @@
         li {
             line-height: 40px;
         }
-        a:before{
+        li a:before{
             content: counter(n);
             counter-increment: n;
             padding-right: 10px;
@@ -40,11 +40,15 @@
         .container{
             padding: 30px;
         }
+        .fork{ 
+            color: #333;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <a class='fork' href='https://github.com/XboxYan/XboxYan.github.io.git'>#欢迎fork#</a>
         <h2>Canvas实例</h2>
         <ul>
             <li><a href="canvas/2.clock.html">时钟</a></li>
