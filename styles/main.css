@@ -1644,5 +1644,9 @@ td {
   text-align: right;
 }
 
+      .main {
+        max-width: 1200px;
+      }
+    
       .gt-no-init>p{ visibility:hidden; }
     
