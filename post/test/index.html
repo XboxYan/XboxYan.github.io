@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>XboxYan</title>
+<title>test | XboxYan</title>
 <link rel="shortcut icon" href="https://XboxYan.github.io/favicon.ico?v=1555387698955">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://XboxYan.github.io/styles/main.css">
@@ -68,58 +68,66 @@
   </div>
 </div>
 
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              test
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-04-16 ·
+              </time>
+              
+            </div>
+            
+            <div class="post-content">
+              <blockquote>
+<p>test</p>
+</blockquote>
+
+            </div>
+          </article>
+        </div>
     
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://XboxYan.github.io/post/test">
-        <h2 class="post-title">test</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-04-16 ·
-        </time>
         
-      </div>
-      
-      <div class="post-abstract">
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://XboxYan.github.io/post/hello-gridea">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>  
         
-      </di>
-    </article>
-  
-    <article class="post">
-      <a href="https://XboxYan.github.io/post/hello-gridea">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2018-12-12 ·
-        </time>
-        
-          <a href="https://XboxYan.github.io/tag/gridea" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://XboxYan.github.io/post/hello-gridea" class="post-feature-image" style="background-image: url('https://XboxYan.github.io/post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </di>
-    </article>
-  
-</div>
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
 
-    
-        <div class="pagination-container">
-  
-  
-</div>
+<div id="gitalk-container"></div>
 
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '76f6db0817582f8fcf7e',
+    clientSecret: '0bff99f569efc8e061740c67585348de78e81e58',
+    repo: 'XboxYan.github.io',
+    owner: 'XboxYan',
+    admin: ['XboxYan'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
     
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
