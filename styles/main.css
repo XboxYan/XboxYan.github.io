@@ -1643,3 +1643,6 @@ td {
 .katex .mtable .col-align-r > .vlist {
   text-align: right;
 }
+
+      .gt-no-init>p{ visibility:hidden; }
+    
