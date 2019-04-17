@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>css3元素出现动画实例 | XboxYan</title>
-<link rel="shortcut icon" href="https://XboxYan.github.io/favicon.ico?v=1555467846398">
+<link rel="shortcut icon" href="https://XboxYan.github.io/favicon.ico?v=1555474857454">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://XboxYan.github.io/styles/main.css">
 
@@ -18,7 +18,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://XboxYan.github.io">
-  <img class="avatar" src="https://XboxYan.github.io/images/avatar.png?v=1555467846398" alt="">
+  <img class="avatar" src="https://XboxYan.github.io/images/avatar.png?v=1555474857454" alt="">
   </a>
   <h1 class="site-title">
     XboxYan
@@ -194,6 +194,32 @@ setTimeout(function(){
 <h2 id="animation">Animation</h2>
 <p>虽然从开头的例子来看，<code>animation</code>的写法又臭又长，但是也正体现出它的功能强大，其中之一就是自动播放动画</p>
 <p>那么，把上面的<code>toast</code>改造一下</p>
+<pre><code class="language-css">.messageInfo{ 
+    /**...**/
+    animation:show .5s forwards;
+}
+.hide{
+  visibility:visible;
+  opacity: 1;
+  transform: translateY(0);
+  animation:hide .5s forwards;
+}
+@keyframes show{
+  to {
+    visibility:visible;
+    opacity: 1;
+    transform: translateY(0)
+  }
+}
+@keyframes hide{
+  to {
+    visibility:hidden;
+    opacity: 0;
+    transform: translateY(-100%)
+  }
+}
+</code></pre>
+<p>js基本和之前一致</p>
 <pre><code class="language-js">function showMessage(txt){
     this.timer &amp;&amp; clearTimeout(this.timer);
     var oDiv = document.getElementById('messageInfo');
