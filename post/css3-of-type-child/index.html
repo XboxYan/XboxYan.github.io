@@ -1,0 +1,218 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSS3 该如何选择 *-of-type 和 *-child | XboxYan</title>
+<link rel="shortcut icon" href="xboxyan.codelabo.cn/favicon.ico?v=1558064229783">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="xboxyan.codelabo.cn/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="xboxyan.codelabo.cn">
+  <img class="avatar" src="xboxyan.codelabo.cn/images/avatar.png?v=1558064229783" alt="">
+  </a>
+  <h1 class="site-title">
+    XboxYan
+  </h1>
+  <p class="site-description">
+    世界美好 你也是。
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/XboxYan" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CSS3 该如何选择 *-of-type 和 *-child
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-05-16 ·
+              </time>
+              
+                <a href="xboxyan.codelabo.cn/tag/MmBXGBKG9" class="post-tags">
+                  # css3
+                </a>
+              
+            </div>
+            
+              <div class="post-feature-image" style="background-image: url('xboxyan.codelabo.cn/post-images/css3-of-type-child.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>CSS3 中有很多表示元素序号的选择器，有以下几种</p>
+<p><code>:first-child</code>、<code>:first-of-type</code>、<code>:last-of-type</code>、<code>:only-of-type</code>、<code>:only-child</code>、<code>:nth-child(n)</code>、<code>:nth-last-child(n)</code>、<code>:nth-of-type(n)</code>、<code>:nth-last-of-type(n)</code>、<code>:last-child</code></p>
+<p>初学者可能会比较容易混淆，这里我可以分一下类</p>
+<table>
+<thead>
+<tr>
+<th>*<strong>-of-type</strong></th>
+<th>*<strong>-child</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:first-of-type</code></td>
+<td><code>:first-child</code></td>
+</tr>
+<tr>
+<td><code>:last-of-type</code></td>
+<td><code>:last-child</code></td>
+</tr>
+<tr>
+<td><code>:only-of-type</code></td>
+<td><code>:only-child</code></td>
+</tr>
+<tr>
+<td><code>:nth-of-type(n)</code></td>
+<td><code>:nth-child(n)</code></td>
+</tr>
+<tr>
+<td><code>:nth-last-of-type(n)</code></td>
+<td><code>:nth-last-child(n)</code></td>
+</tr>
+</tbody>
+</table>
+<p>可以看出完全是一一对应，相信CSS开发者都对这些选择器的功能有个大致印象，比如<code>first-*</code>表示第一个，<code>nth-*</code>表示第几个，<code>nth-last-*</code>表示倒数第几个...</p>
+<h2 id="-of-type-和-child">*-of-type 和 *-child</h2>
+<p>那么，<em><strong>-of-type</strong>和***-child</em>* 到底有什么区别呢？</p>
+<p>从字面上来看，其实就是<code>type</code>和<code>child</code>的区别，也就是说</p>
+<p><code>type</code>表示类型，一类元素，比如都是<code>p</code>元素或者<code>div</code>元素</p>
+<p><code>child</code>表示子元素，没有什么限制</p>
+<h2 id="实例">实例</h2>
+<p>这样描述可能不直观，下面列举一些实例来说明</p>
+<h3 id="1-first-of-type-和first-child">1 :first-of-type 和:first-child</h3>
+<pre><code class="language-html">&lt;div&gt;
+	&lt;h1 class=&quot;h1&quot;&gt;标题1&lt;/h1&gt;
+	&lt;h1  class=&quot;h2&quot;&gt;标题2&lt;/h1&gt;
+	&lt;p class=&quot;p1&quot;&gt;段落1&lt;/p&gt;
+	&lt;p class=&quot;p2&quot;&gt;段落2&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>这里写了一个交互实例，可以随时比较各个选择器的结果</p>
+<p class="codepen" data-height="622" data-theme-id="34022" data-default-tab="html,result" data-user="xboxyan" data-slug-hash="dEvxPr" style="height: 622px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="css3 选择器:first-of-type 和:first-child">
+  <span>See the Pen <a href="https://codepen.io/xboxyan/pen/dEvxPr/">
+  css3 选择器:first-of-type 和:first-child</a> by XboxYan (<a href="https://codepen.io/xboxyan">@xboxyan</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<p>下面是各种选择的结果</p>
+<p><code>div :first-of-type</code>可以选中 <em>标题1</em> 和 <em>段落1</em></p>
+<p><code>div h1:first-of-type</code>可以选中 <em>标题1</em></p>
+<p><code>div p:first-of-type</code>可以选中 <em>段落1</em></p>
+<p><code>div .h1:first-of-type</code> 可以选中 <em>标题1</em></p>
+<p><code>div .h2:first-of-type</code> 未匹配</p>
+<p><code>div :first-child</code> 可以选中 <em>标题1</em></p>
+<p><code>div p:first-child</code> 未匹配</p>
+<p><code>div h1:first-child</code>  `可以选中 <em>标题1</em></p>
+<p><code>div .h1:first-child</code>  `可以选中 <em>标题1</em></p>
+<p><code>div .h2:first-child</code>  未匹配</p>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="xboxyan.codelabo.cn/post/XHJZpj9GB">
+              <h3 class="post-title">
+                css3元素出现动画实例
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '76f6db0817582f8fcf7e',
+    clientSecret: '0bff99f569efc8e061740c67585348de78e81e58',
+    repo: 'XboxYan.github.io',
+    owner: 'XboxYan',
+    admin: ['XboxYan'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+    
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
