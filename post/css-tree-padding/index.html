@@ -1,0 +1,233 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSS 关于多级菜单的内边距的处理方式 | XboxYan</title>
+<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558443456100">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://xboxyan.codelabo.cn/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://xboxyan.codelabo.cn">
+  <img class="avatar" src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558443456100" alt="">
+  </a>
+  <h1 class="site-title">
+    XboxYan
+  </h1>
+  <p class="site-description">
+    世界美好 你也是。
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/XboxYan" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+      
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CSS 关于多级菜单的内边距的处理方式
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-05-21 ·
+              </time>
+              
+                <a href="https://xboxyan.codelabo.cn/tag/css" class="post-tags">
+                  # css
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <h2 id="多级菜单">多级菜单</h2>
+<p>在平时的项目中会经常碰到这样一种布局，暂且称之为多级菜单吧</p>
+<p><img src="https://xboxyan.codelabo.cn/post-images/1558439549223.png" alt=""></p>
+<p>（截图来自于<a href="https://ant.design/components/menu-cn/">ant-design</a>）</p>
+<p>这类布局也很容易，大概就是这样<code>ul</code>和<code>li</code>嵌套，如下</p>
+<pre><code class="language-html">&lt;ul class=&quot;parent&quot;&gt;
+    &lt;li&gt;
+        &lt;div&gt;Navigation01&lt;/div&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;div&gt;Option01&lt;/div&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;div&gt;Option02&lt;/div&gt;&lt;/li&gt;
+            &lt;li&gt;
+                &lt;div&gt;Submenu&lt;/div&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;div&gt;Option03&lt;/div&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;div&gt;Option04&lt;/div&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;div&gt;Navigation02&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>这样就有了下面的效果</p>
+<p><img src="https://xboxyan.codelabo.cn/post-images/1558440703375.png" alt=""></p>
+<p>再经过简单的修饰就可以达到上面的效果了。</p>
+<p>当然，这个很容易，一般情况下我们是通过设置内边距来完成的，比如默认为</p>
+<pre><code class="language-css">ul{
+	padding-left:40px;
+}
+</code></pre>
+<p>然后每一层级逐步累积，然后就实现了，层级越深，距离左边的缩进越多的效果。</p>
+<h2 id="多级菜单选中范围">多级菜单选中范围</h2>
+<p>通过上面的布局和样式，很显然每一项的选择范围都是逐步缩进的，</p>
+<p><img src="https://xboxyan.codelabo.cn/post-images/1558441705019.png" alt=""></p>
+<p>但是，可能设计师觉得不好看，往往会设计成通栏的形式，比如像上面<a href="https://ant.design/components/menu-cn/">ant-design</a>的设计</p>
+<p><img src="https://xboxyan.codelabo.cn/post-images/1558441856625.png" alt=""></p>
+<p>那么，该如何处理呢？</p>
+<h2 id="通栏的处理方式">通栏的处理方式</h2>
+<p>首先，一个很自然的思路就是去除<code>ul</code>的<code>padding</code>，改为每一个子项分别指定<code>padding</code></p>
+<pre><code class="language-css">ul.parent{
+	padding: 0;
+}
+</code></pre>
+<p>然后将内边距直接写在<code>html</code>上，如下</p>
+<pre><code class="language-html">&lt;ul  class=&quot;parent&quot;&gt;
+    &lt;li&gt;
+        &lt;div style=&quot;padding-left:40px&quot;&gt;Navigation01&lt;/div&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;div style=&quot;padding-left:80px&quot;&gt;Option01&lt;/div&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;div style=&quot;padding-left:80px&quot;&gt;Option02&lt;/div&gt;&lt;/li&gt;
+            &lt;li&gt;
+                &lt;div style=&quot;padding-left:80px&quot;&gt;Submenu&lt;/div&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;div style=&quot;padding-left:120px&quot;&gt;Option03&lt;/div&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;div style=&quot;padding-left:120px&quot;&gt;Option04&lt;/div&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;div style=&quot;padding-left:40px&quot;&gt;Navigation02&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>如果菜单层级较多，我们通常使用js来辅助生成，注意每一次循环来指定不同的内边距就可以了</p>
+<p><img src="https://xboxyan.codelabo.cn/post-images/1558442384266.png" alt=""></p>
+<p><a href="https://ant.design/components/menu-cn/">ant-design</a>也是采取这种方式，可以自行打开控制台去查看。</p>
+<p>记得刚入前端的时候就说采取的这种方式，效果实现就好。</p>
+<p>不过，在现在看来，在<code>html</code>中使用内联样式始终不雅，而且数量较多时还需要和<code>js</code>扯上关系，能否优化一下呢</p>
+<p>下面列举两种css方式</p>
+<h3 id="1子选择器">1.子选择器</h3>
+<p>我们可以在上面的基础上，分别控制每一级的内边距，这里我们可以使用子选择器<code>&gt;</code></p>
+<pre><code class="language-css">ul.parent&gt;li&gt;div{/**第一级**/
+    padding-left: 40px;
+}
+ul.parent&gt;li&gt;ul&gt;li&gt;div{/**第二级**/
+    padding-left: 80px;
+}
+ul.parent&gt;li&gt;ul&gt;li&gt;ul&gt;li&gt;div{/**第三级**/
+    padding-left: 120px;
+}
+/** ... **/
+</code></pre>
+<p>通常，在层级不是特别多的情况下，我们可以一一罗列出来，只需用选择器<code>ul&gt;li</code>叠加即可，是不是比<code>style</code>方便维护了很多呢？</p>
+<h3 id="2absolute半依赖定位">2.absolute半依赖定位</h3>
+<p>未完待续...</p>
+
+            </div>
+          </article>
+        </div>
+    
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://xboxyan.codelabo.cn/post/css3-of-type-child">
+              <h3 class="post-title">
+                CSS3 中关于 *-of-type 和 *-child的差异性及适用场景
+              </h3>
+            </a>
+          </div>  
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '76f6db0817582f8fcf7e',
+    clientSecret: '0bff99f569efc8e061740c67585348de78e81e58',
+    repo: 'XboxYan.github.io',
+    owner: 'XboxYan',
+    admin: ['XboxYan'],
+    id: location.pathname,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+    
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
