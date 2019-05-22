@@ -1,108 +1,115 @@
+<!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8" />
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>keyborad | XboxYan</title>
-<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558506228503">
+<meta name="description" content="世界美好 你也是。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558506568990">
 <link rel="stylesheet" href="https://xboxyan.codelabo.cn/styles/main.css">
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 
 
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://xboxyan.codelabo.cn">
-  <img class="avatar" src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558506228503" alt="">
-  </a>
-  <h1 class="site-title">
-    XboxYan
-  </h1>
-  <p class="site-description">
-    世界美好 你也是。
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://xboxyan.codelabo.cn">
+        <img src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558506568990" class="site-logo">
+        <h1 class="site-title">XboxYan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-        <a href="https://github.com/XboxYan" target="_blank">
-          <i class="fab fa-github"></i>
-        </a>
+        
+          <a class="social-link" href="https://github.com/XboxYan" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
       
-    
+        
       
-    
+        
+          <a class="social-link" href="https://weibo.com/yanwenbin1991" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
       
-    
+        
       
-    
+        
       
-    
+    </div>
+    <div class="site-description">
+      世界美好 你也是。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：#keyborad
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://xboxyan.codelabo.cn/post/javascript-auto-keyboard">
-        <h2 class="post-title">javascript 键盘访问半自动化解决方案</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-04-16 ·
-        </time>
-        
-          <a href="https://xboxyan.codelabo.cn/tag/javascript" class="post-tag">
-            # javascript
-          </a>
-        
-          <a href="https://xboxyan.codelabo.cn/tag/keyborad" class="post-tag">
-            # keyborad
-          </a>
-        
-      </div>
-      
-        <a href="https://xboxyan.codelabo.cn/post/javascript-auto-keyboard" class="post-feature-image" style="background-image: url('https://xboxyan.codelabo.cn/post-images/javascript-auto-keyboard.jpg')">
-        </a>
-      
-      <div class="post-abstract">
-        <h2 id="概要">概要</h2>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: keyborad</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://xboxyan.codelabo.cn/post/javascript-auto-keyboard">
+                  <h2 class="post-title">javascript 键盘访问半自动化解决方案</h2>
+                </a>
+                <div class="post-date">
+                  2019-04-16
+                </div>
+                <div class="post-abstract">
+                  <h2 id="概要">概要</h2>
 <p>这是一个半自动化的键盘访问解决方案，主要适用于需要完全键盘操作场景，比如大屏展示，电视，游戏菜单等，大大简化按键操作的逻辑。</p>
 <p>焦点使用虚拟焦点，也就是通过添加<code>.focus</code>等class实现，而不是原生自带的<code>:focus</code>，更利于定制化需求。</p>
 <p>基于<code>HTML</code>页面。</p>
@@ -111,25 +118,45 @@
 </blockquote>
 <p><a href="https://github.com/XboxYan/auto-keyboard">项目地址</a></p>
 
-      </di>
-    </article>
+                </div>
+              </div>
+              
+                <a class="right" href="https://xboxyan.codelabo.cn/post/javascript-auto-keyboard">
+                  <div class="feature-container" style="background-image: url('https://xboxyan.codelabo.cn/post-images/javascript-auto-keyboard.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
   
 </div>
 
-        <div class="pagination-container">
-  
-  
-</div>
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-</div>
-
-<script>
-  hljs.initHighlightingOnLoad()
-</script>
-
+        </div>
       </div>
     </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
   </body>
 </html>

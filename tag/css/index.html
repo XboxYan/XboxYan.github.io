@@ -1,124 +1,155 @@
+<!DOCTYPE html>
 <html>
   <head>
-  <meta charset="utf-8" />
-<meta name="description" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>css | XboxYan</title>
-<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558506228503">
+<meta name="description" content="世界美好 你也是。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558506568990">
 <link rel="stylesheet" href="https://xboxyan.codelabo.cn/styles/main.css">
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
 
 
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://xboxyan.codelabo.cn">
-  <img class="avatar" src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558506228503" alt="">
-  </a>
-  <h1 class="site-title">
-    XboxYan
-  </h1>
-  <p class="site-description">
-    世界美好 你也是。
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-        <a href="https://github.com/XboxYan" target="_blank">
-          <i class="fab fa-github"></i>
-        </a>
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
+    <div id="app" class="main">
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：#css
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://xboxyan.codelabo.cn/post/css-tree-padding">
-        <h2 class="post-title">CSS 关于多级菜单的内边距的处理方式</h2>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://xboxyan.codelabo.cn">
+        <img src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558506568990" class="site-logo">
+        <h1 class="site-title">XboxYan</h1>
       </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-05-21 ·
-        </time>
-        
-          <a href="https://xboxyan.codelabo.cn/tag/css" class="post-tag">
-            # css
-          </a>
-        
-      </div>
-      
-        <a href="https://xboxyan.codelabo.cn/post/css-tree-padding" class="post-feature-image" style="background-image: url('https://xboxyan.codelabo.cn/post-images/css-tree-padding.jpg')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>在平时的项目中会经常碰到这样一种布局，暂且称之为多级菜单吧</p>
-
-      </di>
-    </article>
-  
-</div>
-
-        <div class="pagination-container">
-  
-  
-</div>
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-</div>
-
-<script>
-  hljs.initHighlightingOnLoad()
-</script>
-
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
     </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/XboxYan" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/yanwenbin1991" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      世界美好 你也是。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: css</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://xboxyan.codelabo.cn/post/css-tree-padding">
+                  <h2 class="post-title">CSS 关于多级菜单的内边距的处理方式</h2>
+                </a>
+                <div class="post-date">
+                  2019-05-21
+                </div>
+                <div class="post-abstract">
+                  <p>在平时的项目中会经常碰到这样一种布局，暂且称之为多级菜单吧</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://xboxyan.codelabo.cn/post/css-tree-padding">
+                  <div class="feature-container" style="background-image: url('https://xboxyan.codelabo.cn/post-images/css-tree-padding.jpg')">
+                  </div>
+                </a>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
   </body>
 </html>
