@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CSS 关于多级菜单的内边距的处理方式 | XboxYan</title>
-<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558443456100">
+<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1558490374045">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://xboxyan.codelabo.cn/styles/main.css">
 
@@ -18,7 +18,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://xboxyan.codelabo.cn">
-  <img class="avatar" src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558443456100" alt="">
+  <img class="avatar" src="https://xboxyan.codelabo.cn/images/avatar.png?v=1558490374045" alt="">
   </a>
   <h1 class="site-title">
     XboxYan
@@ -113,7 +113,7 @@
     &lt;li&gt;&lt;div&gt;Navigation02&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </code></pre>
-<p>这样就有了下面的效果</p>
+<p>于是就得到下面一个很原始的样式。</p>
 <p><img src="https://xboxyan.codelabo.cn/post-images/1558440703375.png" alt=""></p>
 <p>再经过简单的修饰就可以达到上面的效果了。</p>
 <p>当然，这个很容易，一般情况下我们是通过设置内边距来完成的，比如默认为</p>
@@ -121,7 +121,7 @@
 	padding-left:40px;
 }
 </code></pre>
-<p>然后每一层级逐步累积，然后就实现了，层级越深，距离左边的缩进越多的效果。</p>
+<p>然后每一层级跟随父级逐步累积，然后就实现了，层级越深，距离左边的缩进越多的效果。</p>
 <h2 id="多级菜单选中范围">多级菜单选中范围</h2>
 <p>通过上面的布局和样式，很显然每一项的选择范围都是逐步缩进的，</p>
 <p><img src="https://xboxyan.codelabo.cn/post-images/1558441705019.png" alt=""></p>
@@ -156,7 +156,7 @@
 <p>如果菜单层级较多，我们通常使用js来辅助生成，注意每一次循环来指定不同的内边距就可以了</p>
 <p><img src="https://xboxyan.codelabo.cn/post-images/1558442384266.png" alt=""></p>
 <p><a href="https://ant.design/components/menu-cn/">ant-design</a>也是采取这种方式，可以自行打开控制台去查看。</p>
-<p>记得刚入前端的时候就说采取的这种方式，效果实现就好。</p>
+<p>记得刚入前端的时候就是采取的这种方式，效果实现就好。</p>
 <p>不过，在现在看来，在<code>html</code>中使用内联样式始终不雅，而且数量较多时还需要和<code>js</code>扯上关系，能否优化一下呢</p>
 <p>下面列举两种css方式</p>
 <h3 id="1子选择器">1.子选择器</h3>
