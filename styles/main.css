@@ -1637,4 +1637,7 @@ a {
 .gt-no-init>p{
     display:none;
 }
+.sidebar{
+overflow:hidden;
+}
     
