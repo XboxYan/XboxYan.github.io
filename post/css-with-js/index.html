@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>借助CSS来管理js事件 | XboxYan</title>
+<meta name="description" content="世界美好 你也是。">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://xboxyan.codelabo.cn/favicon.ico?v=1559210356804">
+<link rel="stylesheet" href="https://xboxyan.codelabo.cn/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://xboxyan.codelabo.cn">
+        <img src="https://xboxyan.codelabo.cn/images/avatar.png?v=1559210356804" class="site-logo">
+        <h1 class="site-title">XboxYan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/XboxYan" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/yanwenbin1991" target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      世界美好 你也是。
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">借助CSS来管理js事件</h2>
+            <div class="post-date">2019-05-30</div>
+            
+              <div class="feature-container" style="background-image: url('https://xboxyan.codelabo.cn/post-images/css-with-js.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>CSS是一门很神奇的语言，很多和它不相干的功能却能起到很显著的效果，有些在js看起来实现都有一定的工作量，CSS一句属性就能轻而易举的解决，下面来看几个例子（主要和js事件相关）。</p>
+<blockquote>
+<p>很多都是开脑洞想出来的，实现效果却意外的惊人</p>
+</blockquote>
+<h2 id="事件禁用">事件禁用</h2>
+<p>在js中对事件禁用并不复杂，但是却容易影响到业务逻辑</p>
+<pre><code class="language-js">function buy(){
+  if(XX){
+    return false;
+  }
+  //其他业务代码
+}
+</code></pre>
+<p>当然，元素也要设置相应的样式，让它看起来不可点击。</p>
+<p>css对事件禁用就比较简单了，主要有两种方式</p>
+<p><strong>1. disabled</strong></p>
+<p>原生表单元素是有默认的禁用属性的，比如</p>
+<pre><code class="language-html">&lt;button disabled onclick=&quot;alert(11)&quot;&gt;按钮&lt;/button&gt;
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/19424274/58613779-2f0eca00-82e9-11e9-980b-9dc8d191a884.png" alt="image"></p>
+<p>可以看出，禁用的默认样式为</p>
+<pre><code class="language-css">button:disabled {
+    color: graytext;
+}
+</code></pre>
+<p>所以，在这里你可以随意的修改禁用的样式</p>
+<pre><code class="language-css">button:disabled {
+    color: red;
+}
+button[disabled] {/**属性选择器也行**/
+    color: red;
+}
+button:hover { /**:hover支持**/
+    color: red;
+}
+button:active,button:focus{/**不支持，其实也好理解，会触发focus()事件，所以也禁用了**/
+  color:red
+}
+</code></pre>
+<p>一般情况下，使用这种方式是比较好的，天然的禁用属性，兼容性也不错</p>
+<p><strong>2. pointer-events:none</strong></p>
+<p>这个属性应该也不陌生，最常见的用法就是禁用一个按钮，而且不局限于表单元素，任意元素均可（比如很多人喜欢用的a标签）</p>
+<pre><code class="language-css">button.disabled {
+    pointer-events:none;
+    user-select:none;/*去除选中效果*/
+    color: graytext;
+}
+</code></pre>
+<p>这个属性用处很多，很多js绞尽脑汁想要过滤掉的方法，直接就用一行属性解决，这里就不展开了，网上教程很多。</p>
+<p><a href="https://codepen.io/xboxyan/pen/KLGXjR">查看这个demo</a></p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="css 禁用事件" src="//codepen.io/xboxyan/embed/KLGXjR/?height=300&theme-id=34022&default-tab=html,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/xboxyan/pen/KLGXjR/'>css 禁用事件</a> by XboxYan
+  (<a href='https://codepen.io/xboxyan'>@xboxyan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<h2 id="长按事件">长按事件</h2>
+<p>原生js中并没有长按事件，通常开发者一般会顺着思路，使用定时器来完成</p>
+<p>下面是伪代码</p>
+<pre><code class="language-js">el.onmousedown = function(){
+    this.timer &amp;&amp; clearTimeout(this.timer);
+    this.timer = settimeout(function(){
+        //业务代码
+    },350)
+}
+el.onmouseup = function(){
+    this.timer &amp;&amp; clearTimeout(this.timer);
+}
+</code></pre>
+<p>当然，可以借助css来完成，而且效果更好，易于控制</p>
+<p>这里为什么说是“借助”呢，因为不能完全有css来完成，只是利用了某些特性</p>
+<p>css3中新增了过渡和动画属性，与之相对应的也预设了这些动画的回调事件，如下</p>
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transitionstart</code></td>
+<td>在开始过渡时触发</td>
+</tr>
+<tr>
+<td><code>transitionrun</code></td>
+<td>在进行过渡时触发</td>
+</tr>
+<tr>
+<td><code>transitioncancel</code></td>
+<td>在取消过渡时触发</td>
+</tr>
+<tr>
+<td><code>transitionend</code></td>
+<td>在完成过渡后触发</td>
+</tr>
+<tr>
+<td><code>animationstart</code></td>
+<td>在 animation 开始时触发</td>
+</tr>
+<tr>
+<td><code>animationiteration</code></td>
+<td>在 animation 完成一个周期时触发</td>
+</tr>
+<tr>
+<td><code>animationend</code></td>
+<td>在 animation 完成时触发</td>
+</tr>
+<tr>
+<td><code>animationcancel</code></td>
+<td>在 animation 取消时触发</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>有些事件存在兼容性问题，有兴趣的可以详细研究</p>
+</blockquote>
+<p>有了这些事件，要做一个长按事件就很容易了，这里有两种种思路，大家可以脑洞一下</p>
+<p>假设需要延时1s；</p>
+<ol>
+<li>过渡时间设置为1s，调用<code>transitionend</code>或者<code>animationend</code></li>
+<li>延时1s，调用<code>transitionstart</code>或者<code>animationstart</code></li>
+</ol>
+<p>这里以第一种情况<code>transitionend</code>（过渡比动画实现要容易多，代码也少，优先用过渡）来实现</p>
+<pre><code class="language-css">button:hover:active{
+  opacity:.99;/**随便选取一个不影响页面的可以过渡的样式**/
+  transition:opacity 1s;
+}
+</code></pre>
+<p>相应的，js需要监听<code>transitionend</code>事件，不需要借助定时器（个人有点鄙视定时器的思想^）</p>
+<pre><code class="language-js">el.addEventListener('transitionend',function(){
+    //业务代码
+})
+</code></pre>
+<p>是不是精简很多呢，需要改长按时间可以直接通过css来控制</p>
+<p>这里封装了一下自定义事件，可以更好的在项目中使用（虽然代码本身就很少了）。</p>
+<p><img src="https://user-images.githubusercontent.com/19424274/58616748-0094ed00-82f1-11e9-9dbf-047653aa428b.png" alt="image"></p>
+<p><a href="https://codepen.io/xboxyan/pen/KLxXNZ">查看这个demo</a></p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="css 长按事件" src="//codepen.io/xboxyan/embed/KLxXNZ/?height=300&theme-id=34022&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/xboxyan/pen/KLxXNZ/'>css 长按事件</a> by XboxYan
+  (<a href='https://codepen.io/xboxyan'>@xboxyan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<h2 id="单次点击事件">单次点击事件</h2>
+<p>在<code>jquery</code>中有一个<code>once</code>（好像是这个）方法，表示绑定一次性事件，点击一次后就不再生效。</p>
+<p>原生js实现这个也不复杂，通常做法就是定义一个标识，点击后改变一下，下面是伪代码</p>
+<pre><code class="language-js">el.onclick = function(){
+   if(!this.once){
+       //业务代码
+       this.once = true;
+   }
+}
+</code></pre>
+<p>借助上面的思路，css也可以实现类似的效果，深究了一番，总结以下两个方法</p>
+<h3 id="1animationend">1.animationend</h3>
+<p><code>animationend</code>是动画结束后触发，显然我们可以在这里做文章</p>
+<p>比如我们可以在初始状态给一个暂停状态<code>animation-play-state:paused</code>，然后在点击时运动<code>animation-play-state:running</code>，结束后一直保持在最后状态<code>animation-fill-mode: forwards</code></p>
+<pre><code class="language-css">.button{
+  animation: once .01s paused forwards;/**给一个足够小的运动时间，确保能够在`:active`时运动完成**/
+}
+.button:hover:active{
+  animation-play-state:running;
+}
+@keyframes once {
+  to{
+    opacity:.8;
+  }
+}
+</code></pre>
+<p>js只需要对<code>animationend</code>进行监听</p>
+<pre><code class="language-js">el.addEventListener('animationend',function(){
+    //业务代码
+})
+</code></pre>
+<h3 id="2纯css实现">2.纯css实现</h3>
+<p>不知道在上面的例子中有没有发现，在动画结束时把元素禁用会怎么样？</p>
+<pre><code class="language-css">@keyframes once {
+  to{
+    opacity:.8;
+    pointer-events:none;
+    user-select:none;
+  }
+}
+</code></pre>
+<pre><code class="language-html">&lt;button class=&quot;button&quot; onclick=&quot;fn()&quot;&gt;按钮&lt;/button&gt;
+</code></pre>
+<p>这样就可以在运动完直接禁用，好像很完美？</p>
+<p>事实上，这里运动的时间很难把控，大家都知道，<code>onclick</code>其实是包含按下和抬起两个过程的，如果抬起的太慢，那么此时元素已经禁用了，触发不了事件；如果抬起太快，如果快速点击，由于还没运动完成，会触发多次事件。</p>
+<p>解决方式也很简单，用<code>onmousedown</code>代替即可</p>
+<pre><code class="language-html">&lt;button class=&quot;button&quot; onmousedown=&quot;fn()&quot;&gt;按钮&lt;/button&gt;
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/19424274/58620367-7e5cf680-82f9-11e9-8b99-881562affea0.png" alt="image"></p>
+<p><a href="https://codepen.io/xboxyan/pen/ZNqrbX">查看这个demo</a></p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="css 单次事件" src="//codepen.io/xboxyan/embed/ZNqrbX/?height=300&theme-id=34022&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/xboxyan/pen/ZNqrbX/'>css 单次事件</a> by XboxYan
+  (<a href='https://codepen.io/xboxyan'>@xboxyan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<h3 id="onresize事件">onresize事件</h3>
+<p>大家都知道<code>window</code>有个<code>onresize</code>事件，可以在窗口拉伸的时候触发，然后就能实时获取窗体的尺寸等等属性。</p>
+<pre><code class="language-js">window.onresize = function(ev){
+   //业务代码
+}
+</code></pre>
+<p>但是，普通的元素却没有这个监听，比如</p>
+<pre><code class="language-js">div.onresize = function(ev){
+   //不生效...
+}
+</code></pre>
+<p>为什么需要这个功能呢？</p>
+<p>大家可能知道有这样一个属性，可以原生拉伸元素，改变尺寸</p>
+<pre><code class="language-css">.box{
+    overflow: hidden;/**需要配合overflow才能生效**/
+    resize: both;
+}
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/19424274/58621193-6a19f900-82fb-11e9-9125-2f4a4bee9fbb.gif" alt="resize"></p>
+<p>只需一个属性，就可以实现元素的拉伸（虽然稍有瑕疵），不需要大量的js来计算。</p>
+<p>视觉展示还好，但是如果需要实时知道元素的尺寸怎么办呢，js通常有两种思路</p>
+<p><strong>1. onmousemove事件</strong></p>
+<p>拉伸的时候很自然的想到是有鼠标按住然后拖拽完成，所以可以给元素添加<code>onmouse-*</code>一系列事件，同时要注意鼠标抬起要取消监听</p>
+<pre><code class="language-js">//大概是这样的逻辑
+div.onmousedown = function(){
+    div.onmousemove = fn;//监听
+    div.onmouseup = function(){
+        div.onmousemove = null;
+    }
+}
+</code></pre>
+<p><strong>2. 定时器</strong></p>
+<p>借助<code>setInterval</code>或者<code>requestAnimFrame</code>来实现监听，同样是需要注意取消监听的时机</p>
+<pre><code class="language-js">//大概是这样的逻辑
+div.onmousedown = function(){
+    this.timer &amp;&amp; clearInterval(this.timer)
+    this.timer = setInterval(fn,300);//监听
+    div.onmouseup = function(){
+        this.timer &amp;&amp; clearInterval(this.timer)
+    }
+}
+</code></pre>
+<p>很显然，上面的方法都不是特别的舒适，很多情况下都会出现监听取消的问题，导致不停的触发，影响体验。</p>
+<p>这时候，又轮到css出场了，很多时候js觉得实现起来不顺畅的时候都可以用css的思维来重新认识。</p>
+<p>那么，如何借助css来监听这些呢？</p>
+<p>可以从过渡和动画两个思路来考虑。</p>
+<p><strong>1. CSS过渡</strong></p>
+<p>首先，我们可以知道的是，在通过<code>resize: both</code>进行元素拉伸的时候，改变的是<code>width</code>和<code>height</code>，这一点可以从开发者工具直接看到</p>
+<p><img src="https://user-images.githubusercontent.com/19424274/58622660-b581d680-82fe-11e9-9b19-bfbd33172827.gif" alt="resize_1"></p>
+<p>我们需要通过<code>transitionrun</code>或者<code>transitionend</code>来监听<code>width</code>和<code>height</code>，所以需要给这两个属性加上过渡</p>
+<pre><code class="language-css">.box{
+   transition:width .3s,ehight .3s;//分别给width和height设置过渡，其他属性不需要
+}
+</code></pre>
+<p>这样就可以拿到监听了，不过这种方式有一个弊端，由于过渡需要时间，所以有一种不跟随，卡顿的感觉。</p>
+<p><img src="https://user-images.githubusercontent.com/19424274/58623074-b23b1a80-82ff-11e9-97d2-f23b876ece4d.gif" alt="resize_2"></p>
+<p>所以我们来看第二种方式</p>
+<p><strong>2. animationiteration</strong></p>
+<p><code>css</code>动画可以设置播放次数，如果设置成<code>animation-iteration-count: infinite</code>就表示无限轮播，配合<code>animationiteration</code>回调，不就可以实现监听了么</p>
+<pre><code class="language-css">.box:active{
+    animation: resize .3s infinite forwards;
+}
+
+@keyframes resize{
+    to {
+       opacity: .99;/**用一个无关紧要的属性来触发动画**/
+    }
+}
+</code></pre>
+<p>js很简单，一个监听就能解决问题，也不需要什么取消监听什么，这些都已经在css完成了</p>
+<pre><code class="language-js">el.addEventListener('animationiteration',function(){
+    //业务代码
+})
+</code></pre>
+<p>这里是每个动画完成一次就回调一次，所以我们可以通过设置动画时长来控制监听的频率，比如上面是<code>.3s</code>的触发频率。</p>
+<p>下面写了一个demo，可以实现自定义<code>onresize</code>事件</p>
+<p><img src="https://user-images.githubusercontent.com/19424274/58624374-a2710580-8302-11e9-9ae1-8f7dd8ac174e.gif" alt="resize_3"></p>
+<p><a href="https://codepen.io/xboxyan/pen/PvyeOL">查看这个demo</a></p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="css resize事件" src="//codepen.io/xboxyan/embed/PvyeOL/?height=300&theme-id=34022&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/xboxyan/pen/PvyeOL/'>css resize事件</a> by XboxYan
+  (<a href='https://codepen.io/xboxyan'>@xboxyan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+<h2 id="小节">小节</h2>
+<p>以上通过借助css，实现了许多js都很棘手的问题，可能还会有更多的应用场景，欢迎小伙伴留言讨论~</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://xboxyan.codelabo.cn/tag/MmBXGBKG9" class="tag">
+                    css3
+                  </a>
+                
+                  <a href="https://xboxyan.codelabo.cn/tag/javascript" class="tag">
+                    javascript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://xboxyan.codelabo.cn/post/css-tree-padding">
+                  <h3 class="post-title">
+                    CSS 关于多级菜单的内边距的处理方式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '76f6db0817582f8fcf7e',
+        clientSecret: '0bff99f569efc8e061740c67585348de78e81e58',
+        repo: 'XboxYan.github.io',
+        owner: 'XboxYan',
+        admin: ['XboxYan'],
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
